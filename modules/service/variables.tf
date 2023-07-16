@@ -204,8 +204,20 @@ variable "iam_role_arn" {
   default     = null
 }
 
+variable "iam_role" {
+  description = "Existing IAM role"
+  type        = string
+  default     = null
+}
+
 variable "iam_role_name" {
   description = "Name to use on IAM role created"
+  type        = string
+  default     = null
+}
+
+variable "iam_policy_name" {
+  description = "Name to use on IAM policy created"
   type        = string
   default     = null
 }
@@ -222,8 +234,26 @@ variable "iam_role_path" {
   default     = null
 }
 
+variable "iam_policy_path" {
+  description = "IAM policy path"
+  type        = string
+  default     = null
+}
+
+variable "iam_policy_document" {
+  description = "IAM policy document"
+  type        = string
+  default     = null
+}
+
 variable "iam_role_description" {
   description = "Description of the role"
+  type        = string
+  default     = null
+}
+
+variable "iam_policy_description" {
+  description = "Description of the policy"
   type        = string
   default     = null
 }
