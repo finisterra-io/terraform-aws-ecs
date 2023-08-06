@@ -194,11 +194,6 @@ resource "aws_ecs_service" "this" {
   propagate_tags = var.propagate_tags
   tags           = var.tags
 
-  timeouts {
-    create = try(var.timeouts.create, null)
-    update = try(var.timeouts.update, null)
-    delete = try(var.timeouts.delete, null)
-  }
 
   depends_on = [aws_iam_role_policy_attachment.service]
 
@@ -380,11 +375,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   propagate_tags = var.propagate_tags
   tags           = var.tags
 
-  timeouts {
-    create = try(var.timeouts.create, null)
-    update = try(var.timeouts.update, null)
-    delete = try(var.timeouts.delete, null)
-  }
+
 
   depends_on = [aws_iam_role_policy_attachment.service]
 
