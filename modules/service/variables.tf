@@ -671,3 +671,10 @@ variable "security_group_tags" {
   type        = map(string)
   default     = {}
 }
+
+
+variable "task_exec_assume_role_policy" {
+  description = "IAM policy document defining the trust relationship for the task execution role"
+  type        = string
+  default     = null
+}
