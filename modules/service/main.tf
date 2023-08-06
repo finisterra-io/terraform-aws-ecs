@@ -874,7 +874,7 @@ resource "aws_iam_role" "tasks" {
   path        = var.tasks_iam_role_path
   description = var.tasks_iam_role_description
 
-  assume_role_policy    = data.aws_iam_policy_document.tasks_assume[0].json
+  assume_role_policy    = var.tasks_assume_role_policy
   permissions_boundary  = var.tasks_iam_role_permissions_boundary
   force_detach_policies = true
 

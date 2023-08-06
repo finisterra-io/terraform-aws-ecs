@@ -678,3 +678,9 @@ variable "task_exec_assume_role_policy" {
   type        = string
   default     = null
 }
+
+variable "tasks_assume_role_policy" {
+  description = "IAM policy document defining the trust relationship for the tasks role"
+  type        = string
+  default     = null
+}
