@@ -197,7 +197,7 @@ resource "aws_ecs_service" "this" {
   tags           = var.tags
 
 
-  depends_on = [aws_iam_role_policy_attachment.service, aws_ecs_service]
+  depends_on = [aws_iam_role_policy_attachment.service]
 
   lifecycle {
     ignore_changes = [
