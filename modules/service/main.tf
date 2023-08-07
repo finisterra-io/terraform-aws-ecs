@@ -183,7 +183,7 @@ resource "aws_ecs_service" "this" {
       container_name = try(service_registries.value.container_name, null)
       container_port = try(service_registries.value.container_port, null)
       port           = try(service_registries.value.port, null)
-      registry_arn   = service_registries.value.registry_arn
+      registry_arn   = length(data.aws_service_discovery_service.selected) > 0 ? data.aws_service_discovery_service.selected[0].arn : null
     }
   }
 
