@@ -689,7 +689,7 @@ variable "tasks_assume_role_policy" {
 variable "create_target_group" {
   description = "Determines if a target group is created"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "target_group_name" {
