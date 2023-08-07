@@ -415,7 +415,7 @@ resource "aws_lb_target_group" "this" {
   }
 
   dynamic "stickiness" {
-    for_each = var.target_group_stickiness ? [var.target_group_stickiness] : []
+    for_each = length(var.target_group_stickiness) > 0 ? [var.target_group_stickiness] : []
 
     content {
       cookie_duration = try(stickiness.value.cookie_duration, null)
@@ -423,6 +423,7 @@ resource "aws_lb_target_group" "this" {
       type            = try(stickiness.value.type, null)
     }
   }
+
 
   tags = var.target_group_tags
 }
