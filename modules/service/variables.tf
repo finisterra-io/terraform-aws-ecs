@@ -684,3 +684,56 @@ variable "tasks_assume_role_policy" {
   type        = string
   default     = null
 }
+
+
+variable "create_target_group" {
+  description = "Determines if a target group is created"
+  type        = bool
+  default     = true
+}
+
+variable "target_group_name" {
+  description = "Name to use on target group created"
+  type        = string
+  default     = null
+}
+
+variable "target_group_port" {
+  description = "Port to use on target group created"
+  type        = number
+  default     = 80
+}
+
+variable "target_group_protocol" {
+  description = "Protocol to use on target group created"
+  type        = string
+  default     = "HTTP"
+}
+
+variable "target_group_health_check" {
+  description = "Health check configuration for the target group"
+  type        = map(any)
+  default = {
+    enabled             = true
+    interval            = 30
+    path                = "/"
+    port                = "traffic-port"
+    protocol            = "HTTP"
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+  }
+}
+
+variable "target_group_stickiness" {
+  description = "Stickiness configuration for the target group"
+  type        = map(any)
+  default     = {}
+}
+
+variable "target_group_tags" {
+  description = "A map of additional tags to add to the target group created"
+  type        = map(string)
+  default     = {}
+}
+

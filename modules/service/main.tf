@@ -27,6 +27,8 @@ locals {
   }
 }
 
+
+
 resource "aws_ecs_service" "this" {
   count = var.create && !var.ignore_task_definition_changes ? 1 : 0
 
@@ -88,7 +90,7 @@ resource "aws_ecs_service" "this" {
       container_name   = load_balancer.value.container_name
       container_port   = load_balancer.value.container_port
       elb_name         = try(load_balancer.value.elb_name, null)
-      target_group_arn = try(load_balancer.value.target_group_arn, null)
+      target_group_arn = aws_lb_target_group.this[0].arn
     }
   }
 
@@ -195,7 +197,7 @@ resource "aws_ecs_service" "this" {
   tags           = var.tags
 
 
-  depends_on = [aws_iam_role_policy_attachment.service]
+  depends_on = [aws_iam_role_policy_attachment.service, aws_ecs_service]
 
   lifecycle {
     ignore_changes = [
@@ -269,7 +271,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
       container_name   = load_balancer.value.container_name
       container_port   = load_balancer.value.container_port
       elb_name         = try(load_balancer.value.elb_name, null)
-      target_group_arn = try(load_balancer.value.target_group_arn, null)
+      target_group_arn = aws_lb_target_group.this[0].arn
     }
   }
 
@@ -387,6 +389,57 @@ resource "aws_ecs_service" "ignore_task_definition" {
     ]
   }
 }
+
+resource "aws_lb_target_group" "this" {
+  count = var.create_target_group ? 1 : 0
+
+  name     = var.target_group_name
+  port     = var.target_group_port
+  protocol = var.target_group_protocol
+  vpc_id   = data.aws_subnet.this[0].vpc_id
+
+  dynamic "health_check" {
+    for_each = var.htarget_group_ealth_check ? [var.target_group_health_check] : []
+
+    content {
+      enabled             = try(health_check.value.enabled, true)
+      healthy_threshold   = try(health_check.value.healthy_threshold, null)
+      interval            = try(health_check.value.interval, null)
+      matcher             = try(health_check.value.matcher, null)
+      path                = try(health_check.value.path, null)
+      port                = try(health_check.value.port, null)
+      protocol            = try(health_check.value.protocol, null)
+      timeout             = try(health_check.value.timeout, null)
+      unhealthy_threshold = try(health_check.value.unhealthy_threshold, null)
+    }
+  }
+
+  dynamic "stickiness" {
+    for_each = var.target_group_stickiness ? [var.target_group_stickiness] : []
+
+    content {
+      cookie_duration = try(stickiness.value.cookie_duration, null)
+      enabled         = try(stickiness.value.enabled, true)
+      type            = try(stickiness.value.type, null)
+    }
+  }
+
+  tags = var.target_group_tags
+}
+
+# resource "aws_lb_listener" "this" {
+#   count             = var.create_target_group ? 1 : 0
+#   load_balancer_arn = data.aws_lb.existing[0].arn
+#   port              = 443
+#   protocol          = "HTTPS"
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.target_group[0].arn
+#   }
+# }
+
+
 
 ################################################################################
 # Service - IAM Role
@@ -1257,3 +1310,5 @@ resource "aws_security_group_rule" "this" {
   self                     = lookup(each.value, "self", null)
   source_security_group_id = lookup(each.value, "source_security_group_id", null)
 }
+
+
