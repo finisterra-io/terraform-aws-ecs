@@ -396,7 +396,8 @@ resource "aws_lb_target_group" "this" {
   name     = var.target_group_name
   port     = var.target_group_port
   protocol = var.target_group_protocol
-  vpc_id   = data.aws_vpc.this[0].id
+  vpc_id   = data.aws_vpc.default[0].id
+
 
   dynamic "health_check" {
     for_each = length(var.target_group_health_check) > 0 ? [var.target_group_health_check] : []
