@@ -364,7 +364,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
       container_name = try(service_registries.value.container_name, null)
       container_port = try(service_registries.value.container_port, null)
       port           = try(service_registries.value.port, null)
-      registry_arn   = service_registries.value.registry_arn
+      registry_arn   = try(data.aws_service_discovery_service.selected[0].arn, null)
     }
   }
 
@@ -974,7 +974,7 @@ resource "aws_ecs_task_set" "this" {
       container_name = try(service_registries.value.container_name, null)
       container_port = try(service_registries.value.container_port, null)
       port           = try(service_registries.value.port, null)
-      registry_arn   = service_registries.value.registry_arn
+      registry_arn   = try(data.aws_service_discovery_service.selected[0].arn, null)
     }
   }
 
@@ -1055,7 +1055,7 @@ resource "aws_ecs_task_set" "ignore_task_definition" {
       container_name = try(service_registries.value.container_name, null)
       container_port = try(service_registries.value.container_port, null)
       port           = try(service_registries.value.port, null)
-      registry_arn   = service_registries.value.registry_arn
+      registry_arn   = try(data.aws_service_discovery_service.selected[0].arn, null)
     }
   }
 
