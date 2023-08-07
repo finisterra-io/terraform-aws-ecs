@@ -399,7 +399,7 @@ resource "aws_lb_target_group" "this" {
   vpc_id   = data.aws_subnet.this[0].vpc_id
 
   dynamic "health_check" {
-    for_each = var.target_group_ealth_check ? [var.target_group_health_check] : []
+    for_each = var.target_group_health_check ? [var.target_group_health_check] : []
 
     content {
       enabled             = try(health_check.value.enabled, true)
