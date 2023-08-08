@@ -785,3 +785,26 @@ variable "listener_rule_tags" {
   default     = {}
 }
 
+variable "create_aws_lb_listener_rule" {
+  description = "Determines if a listener rule is created"
+  type        = bool
+  default     = false
+}
+
+variable "create_aws_lb_listener_rule" {
+  description = "Determines if a listener rule is created"
+  type        = bool
+  default     = false
+}
+
+variable "listener_rule_port" {
+  description = "Port to use on listener rule created"
+  type        = number
+  default     = null
+}
+
+variable "listener_rule_lb_name" {
+  description = "Name of the load balancer to attach the listener rule to"
+  type        = string
+  default     = null
+}

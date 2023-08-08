@@ -19,6 +19,17 @@ data "aws_vpc" "default" {
 }
 
 data "aws_lb" "default" {
-  count = var.create_target_group ? 1 : 0
+  count = var.create_aws_lb_listener ? 1 : 0
   name  = var.lb_name
+}
+
+data "aws_lb" "listener_rule" {
+  count = var.create_aws_lb_listener_rule && var.create_aws_lb_listener == false ? 1 : 0
+  name  = var.listener_rule_lb_name
+}
+
+data "aws_lb_listener" "listener_rule" {
+  count             = var.create_aws_lb_listener_rule && var.create_aws_lb_listener == false ? 1 : 0
+  load_balancer_arn = data.aws_lb.listener_rule[0].arn
+  port              = var.listener_rule_port
 }

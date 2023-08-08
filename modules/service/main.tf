@@ -430,11 +430,10 @@ resource "aws_lb_target_group" "this" {
 }
 
 resource "aws_lb_listener" "this" {
-  count             = var.create_target_group ? 1 : 0
-  load_balancer_arn = data.aws_lb.existing[0].arn
+  count             = var.create_aws_lb_listener ? 1 : 0
+  load_balancer_arn = data.aws_lb.default[0].arn
   port              = var.lb_listener_port
   protocol          = var.lb_listener_protocol
-
 
   dynamic "default_action" {
     for_each = length(var.lb_listener_default_action) > 0 ? [var.lb_listener_default_action] : []
@@ -449,9 +448,9 @@ resource "aws_lb_listener" "this" {
 }
 
 resource "aws_lb_listener_rule" "this" {
-  count = var.create_target_group ? 1 : 0
+  count = var.create_aws_lb_listener_rule ? 1 : 0
 
-  listener_arn = aws_lb_listener.this[0].arn
+  listener_arn = var.create_aws_lb_listener ? aws_lb_listener.this[0].arn : data.aws_lb_listener.default[0].arn
   priority     = var.listener_rule_priority
 
   action {
