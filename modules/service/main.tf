@@ -429,18 +429,46 @@ resource "aws_lb_target_group" "this" {
   tags = var.target_group_tags
 }
 
-# resource "aws_lb_listener" "this" {
-#   count             = var.create_target_group ? 1 : 0
-#   load_balancer_arn = data.aws_lb.existing[0].arn
-#   port              = 443
-#   protocol          = "HTTPS"
+resource "aws_lb_listener" {
+  count             = var.create_target_group ? 1 : 0
+  load_balancer_arn = data.aws_lb.existing[0].arn
+  port              = var.lb_listener_port
+  protocol          = var.lb_listener_protocol
 
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.target_group[0].arn
-#   }
-# }
 
+  dynamic "default_action" {
+    for_each = length(var.lb_listener_default_action) > 0 ? [var.lb_listener_default_action] : []
+
+    content {
+      target_group_arn = aws_lb_target_group.this[0].arn
+      type             = "forward"
+    }
+  }
+
+  tags = var.lb_listener_tags
+}
+
+resource "aws_lb_listener_rule" "this" {
+  count = var.create_target_group ? 1 : 0
+
+  listener_arn = aws_lb_listener.this[0].arn
+  priority     = var.listener_rule_priority
+
+  action {
+    target_group_arn = aws_lb_target_group.this[0].arn
+    type             = "forward"
+  }
+
+  dynamic "condition" {
+    for_each = length(var.listener_rule_condition) > 0 ? [var.listener_rule_condition] : []
+
+    content {
+      field  = try(condition.value.field, null)
+      values = try(condition.value.values, null)
+    }
+  }
+  tags = var.listener_rule_tags
+}
 
 
 ################################################################################

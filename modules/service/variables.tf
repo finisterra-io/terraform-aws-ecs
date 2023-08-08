@@ -742,3 +742,53 @@ variable "vpc_name" {
   type        = string
   default     = null
 }
+
+
+variable "create_target_group" {
+  description = "Determines if a target group is created"
+  type        = bool
+  default     = false
+}
+
+variable "lb_listener_port" {
+  description = "Port to use on load balancer listener created"
+  type        = number
+  default     = 80
+}
+
+variable "lb_listener_protocol" {
+  description = "Protocol to use on load balancer listener created"
+  type        = string
+  default     = "HTTP"
+}
+
+variable "lb_listener_default_action" {
+  description = "Default action configuration for the load balancer listener"
+  type        = map(any)
+  default     = {}
+}
+
+variable "lb_listener_tags" {
+  description = "A map of additional tags to add to the load balancer listener created"
+  type        = map(string)
+  default     = {}
+}
+
+variable "listener_rule_priority" {
+  description = "Priority for the listener rule"
+  type        = number
+  default     = 1
+}
+
+variable "listener_rule_conditions" {
+  description = "List of conditions for the listener rule"
+  type        = list(map(any))
+  default     = []
+}
+
+variable "listener_rule_tags" {
+  description = "A map of additional tags to add to the listener rule created"
+  type        = map(string)
+  default     = {}
+}
+

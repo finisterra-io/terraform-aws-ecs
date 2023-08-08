@@ -17,3 +17,8 @@ data "aws_vpc" "default" {
     Name = var.vpc_name
   }
 }
+
+data "aws_lb" "default" {
+  count = var.create_target_group ? 1 : 0
+  name  = var.lb_name
+}
