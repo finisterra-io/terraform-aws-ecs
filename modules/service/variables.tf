@@ -791,8 +791,8 @@ variable "create_aws_lb_listener_rule" {
   default     = false
 }
 
-variable "create_aws_lb_listener_rule" {
-  description = "Determines if a listener rule is created"
+variable "create_aws_lb_listener" {
+  description = "Determines if a listener is created"
   type        = bool
   default     = false
 }
