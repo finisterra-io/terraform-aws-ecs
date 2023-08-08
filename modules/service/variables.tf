@@ -808,3 +808,9 @@ variable "listener_rule_lb_name" {
   type        = string
   default     = null
 }
+
+variable "lb_name" {
+  description = "Name of the load balancer to attach the listener to"
+  type        = string
+  default     = null
+}
