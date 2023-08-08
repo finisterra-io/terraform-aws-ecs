@@ -459,13 +459,58 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = length(var.listener_rule_conditions) > 0 ? [var.listener_rule_conditions] : []
+    for_each = var.listener_rule_conditions
 
     content {
-      field  = try(condition.value.field, null)
-      values = try(condition.value.values, null)
+      # Host Header condition
+      host_header {
+        values = try(condition.value.host_header[0].values, null)
+      }
+
+      # HTTP Header condition
+      dynamic "http_header" {
+        for_each = try(condition.value.http_header, [])
+        content {
+          http_header_name = http_header.value.name
+          values           = http_header.value.values
+        }
+      }
+
+      # HTTP Request Method condition
+      dynamic "http_request_method" {
+        for_each = try(condition.value.http_request_method, [])
+        content {
+          values = http_request_method.value.values
+        }
+      }
+
+      # Path Pattern condition
+      dynamic "path_pattern" {
+        for_each = try(condition.value.path_pattern, [])
+        content {
+          values = path_pattern.value.values
+        }
+      }
+
+      # Query String condition
+      dynamic "query_string" {
+        for_each = try(condition.value.query_string, [])
+        content {
+          key   = query_string.value.key
+          value = query_string.value.value
+        }
+      }
+
+      # Source IP condition
+      dynamic "source_ip" {
+        for_each = try(condition.value.source_ip, [])
+        content {
+          values = source_ip.value.values
+        }
+      }
     }
   }
+
   tags = var.listener_rule_tags
 }
 
