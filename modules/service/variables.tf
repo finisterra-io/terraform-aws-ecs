@@ -743,13 +743,6 @@ variable "vpc_name" {
   default     = null
 }
 
-
-variable "create_target_group" {
-  description = "Determines if a target group is created"
-  type        = bool
-  default     = false
-}
-
 variable "lb_listener_port" {
   description = "Port to use on load balancer listener created"
   type        = number
