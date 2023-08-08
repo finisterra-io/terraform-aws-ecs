@@ -459,7 +459,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = length(var.listener_rule_condition) > 0 ? [var.listener_rule_condition] : []
+    for_each = length(var.listener_rule_conditions) > 0 ? [var.listener_rule_conditions] : []
 
     content {
       field  = try(condition.value.field, null)
