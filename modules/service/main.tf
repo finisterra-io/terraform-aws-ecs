@@ -429,7 +429,7 @@ resource "aws_lb_target_group" "this" {
   tags = var.target_group_tags
 }
 
-resource "aws_lb_listener" {
+resource "aws_lb_listener" "this" {
   count             = var.create_target_group ? 1 : 0
   load_balancer_arn = data.aws_lb.existing[0].arn
   port              = var.lb_listener_port
