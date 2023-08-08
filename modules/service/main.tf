@@ -459,7 +459,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 
   dynamic "condition" {
-    for_each = var.listener_rule_conditions
+    for_each = length(var.listener_rule_conditions) > 0 ? [var.listener_rule_conditions] : []
 
     content {
       # Host Header condition

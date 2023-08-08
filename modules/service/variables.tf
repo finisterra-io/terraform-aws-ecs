@@ -775,8 +775,8 @@ variable "listener_rule_priority" {
 
 variable "listener_rule_conditions" {
   description = "List of conditions for the listener rule"
-  type        = list(map(any))
-  default     = []
+  type        = map(any)
+  default     = {}
 }
 
 variable "listener_rule_tags" {
