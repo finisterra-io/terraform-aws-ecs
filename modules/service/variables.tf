@@ -755,11 +755,6 @@ variable "lb_listener_protocol" {
   default     = "HTTP"
 }
 
-variable "lb_listener_default_action" {
-  description = "Default action configuration for the load balancer listener"
-  type        = map(any)
-  default     = {}
-}
 
 variable "lb_listener_tags" {
   description = "A map of additional tags to add to the load balancer listener created"

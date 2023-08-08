@@ -435,14 +435,11 @@ resource "aws_lb_listener" "this" {
   port              = var.lb_listener_port
   protocol          = var.lb_listener_protocol
 
-  dynamic "default_action" {
-    for_each = length(var.lb_listener_default_action) > 0 ? [var.lb_listener_default_action] : []
-
-    content {
-      target_group_arn = aws_lb_target_group.this[0].arn
-      type             = "forward"
-    }
+  default_action {
+    target_group_arn = aws_lb_target_group.this[0].arn
+    type             = "forward"
   }
+
 
   tags = var.lb_listener_tags
 }
