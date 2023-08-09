@@ -450,7 +450,7 @@ resource "aws_lb_listener_rule" "this" {
   priority     = each.value.priority
 
   action {
-    target_group_arn = aws_lb_target_group.this[each.key].arn
+    target_group_arn = aws_lb_target_group.this[0].arn
     type             = "forward"
   }
 
