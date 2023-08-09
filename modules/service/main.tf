@@ -462,12 +462,7 @@ resource "aws_lb_listener_rule" "this" {
     content {
       # Host Header condition
       host_header {
-        values = try(condition.value.host_header[0].values, null)
-      }
-
-      # HTTP Header condition
-      host_header {
-        values = condition.value[0].host_header[0].values
+        values = each.value.conditions[0].host_header[0].values
       }
 
       # HTTP Request Method condition
