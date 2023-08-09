@@ -817,6 +817,7 @@ variable "listeners" {
     domain_name = string
     tags        = map(string)
   }))
+  default = {}
 }
 
 
