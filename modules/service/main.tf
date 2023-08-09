@@ -440,7 +440,7 @@ resource "aws_lb_listener" "this" {
     type             = "forward"
   }
 
-  tags = each.value.tags
+  tags = try(each.value.tags, null)
 }
 
 resource "aws_lb_listener_rule" "this" {
@@ -507,7 +507,7 @@ resource "aws_lb_listener_rule" "this" {
     }
   }
 
-  tags = each.value.tags
+  tags = try(each.value.tags, null)
 }
 
 
