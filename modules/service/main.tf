@@ -467,7 +467,7 @@ resource "aws_lb_listener_rule" "this" {
 
       # HTTP Header condition
       dynamic "host_header" {
-        for_each = condition.value.host_header
+        for_each = [condition.value[0].host_header[0]]
         content {
           values = host_header.value.values
         }
