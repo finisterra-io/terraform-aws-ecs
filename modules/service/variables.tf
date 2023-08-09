@@ -810,10 +810,15 @@ variable "lb_name" {
 }
 
 variable "listeners" {
-  description = "List of listeners to create on the load balancer"
-  type        = map(any)
-  default     = {}
+  description = "A map of listeners"
+  type = map(object({
+    port        = number
+    protocol    = string
+    domain_name = string
+    tags        = map(string)
+  }))
 }
+
 
 variable "listener_rules" {
   description = "List of listener rules to create on the load balancer"
