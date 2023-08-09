@@ -29,7 +29,7 @@ data "aws_lb" "listener_rule" {
 }
 
 data "aws_lb_listener" "listener_rule" {
-  count             = var.create_aws_lb_listener_rule && var.create_aws_lb_listener == false ? 1 : 0
+  for_each          = var.create_aws_lb_listener_rule && var.create_aws_lb_listener == false ? var.listener_rules : {}
   load_balancer_arn = data.aws_lb.listener_rule[0].arn
-  port              = var.listener_rule_port
+  port              = each.value.port
 }

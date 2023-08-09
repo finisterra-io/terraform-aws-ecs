@@ -755,7 +755,6 @@ variable "lb_listener_protocol" {
   default     = "HTTP"
 }
 
-
 variable "lb_listener_tags" {
   description = "A map of additional tags to add to the load balancer listener created"
   type        = map(string)
@@ -808,4 +807,16 @@ variable "lb_name" {
   description = "Name of the load balancer to attach the listener to"
   type        = string
   default     = null
+}
+
+variable "listeners" {
+  description = "List of listeners to create on the load balancer"
+  type        = map(any)
+  default     = {}
+}
+
+variable "listener_rules" {
+  description = "List of listener rules to create on the load balancer"
+  type        = map(any)
+  default     = {}
 }
