@@ -454,6 +454,8 @@ resource "aws_lb_listener_rule" "this" {
     type             = "forward"
   }
 
+
+
   dynamic "condition" {
     for_each = length(each.value.conditions) > 0 ? [each.value.conditions] : []
 
@@ -464,11 +466,10 @@ resource "aws_lb_listener_rule" "this" {
       }
 
       # HTTP Header condition
-      dynamic "http_header" {
-        for_each = try(condition.value.http_header, [])
+      dynamic "host_header" {
+        for_each = condition.value.host_header
         content {
-          http_header_name = http_header.value.name
-          values           = http_header.value.values
+          values = host_header.value.values
         }
       }
 
