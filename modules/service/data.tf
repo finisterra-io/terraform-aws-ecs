@@ -33,3 +33,10 @@ data "aws_lb_listener" "listener_rule" {
   load_balancer_arn = data.aws_lb.listener_rule[0].arn
   port              = each.value.port
 }
+
+
+data "aws_acm_certificate" "this" {
+  count       = var.create_aws_lb_listener ? var.listeners : {}
+  domain_name = each.value.domain_name
+  statuses    = ["ISSUED"]
+}
