@@ -837,3 +837,9 @@ variable "task_exec_iam_role_inline_policies" {
   description = "IAM policy document (same as policy_documents but in JSON format)"
   default     = []
 }
+
+variable "tasks_iam_role_inline_policies" {
+  type        = list(any)
+  description = "IAM policy document (same as policy_documents but in JSON format)"
+  default     = []
+}

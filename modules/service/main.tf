@@ -1003,7 +1003,15 @@ resource "aws_iam_role" "tasks" {
   permissions_boundary  = var.tasks_iam_role_permissions_boundary
   force_detach_policies = true
 
-  tags = merge(var.tags, var.tasks_iam_role_tags)
+  dynamic "inline_policy" {
+    for_each = var.tasks_iam_role_inline_policies
+    content {
+      name   = inline_policy.value.name
+      policy = inline_policy.value.policy
+    }
+  }
+
+  tags = var.tasks_iam_role_tags
 }
 
 resource "aws_iam_role_policy_attachment" "tasks" {
