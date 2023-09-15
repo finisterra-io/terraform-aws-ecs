@@ -820,9 +820,20 @@ variable "listeners" {
   default = {}
 }
 
-
 variable "listener_rules" {
   description = "List of listener rules to create on the load balancer"
   type        = map(any)
   default     = {}
+}
+
+variable "iam_role_inline_policies" {
+  type        = list(any)
+  description = "IAM policy document (same as policy_documents but in JSON format)"
+  default     = []
+}
+
+variable "task_exec_iam_role_inline_policies" {
+  type        = list(any)
+  description = "IAM policy document (same as policy_documents but in JSON format)"
+  default     = []
 }
