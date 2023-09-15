@@ -35,8 +35,8 @@ data "aws_lb_listener" "listener_rule" {
 }
 
 
-data "aws_acm_certificate" "this" {
-  for_each = var.create_aws_lb_listener ? var.listeners : {}
-  domain   = each.value.domain_name
-  statuses = ["ISSUED"]
-}
+# data "aws_acm_certificate" "this" {
+#   for_each = var.create_aws_lb_listener ? var.listeners : {}
+#   domain   = each.value.domain_name
+#   statuses = ["ISSUED"]
+# }

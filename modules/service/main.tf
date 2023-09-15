@@ -435,7 +435,7 @@ resource "aws_lb_listener" "this" {
   port              = each.value.port
   protocol          = each.value.protocol
 
-  certificate_arn = try(data.aws_acm_certificate.this[each.value.domain_name].arn, null)
+  certificate_arn = try(each.value.certificate_arn, null)
 
   default_action {
     target_group_arn = aws_lb_target_group.this[0].arn

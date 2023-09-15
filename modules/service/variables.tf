@@ -812,10 +812,10 @@ variable "lb_name" {
 variable "listeners" {
   description = "A map of listeners"
   type = map(object({
-    port        = number
-    protocol    = string
-    domain_name = string
-    tags        = map(string)
+    port            = number
+    protocol        = string
+    certificate_arn = string
+    tags            = map(string)
   }))
   default = {}
 }
