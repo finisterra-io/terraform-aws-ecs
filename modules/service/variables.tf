@@ -128,6 +128,12 @@ variable "subnet_ids" {
   default     = []
 }
 
+variable "subnet_names" {
+  type        = list(string)
+  description = "The names for the default subnets, uses a module label name if left empty"
+  default     = null
+}
+
 variable "ordered_placement_strategy" {
   description = "Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence"
   type        = any
