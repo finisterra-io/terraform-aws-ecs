@@ -511,8 +511,9 @@ resource "aws_lb_listener_rule" "this" {
 ################################################################################
 
 locals {
-  create_iam_role = var.create && var.create_iam_role
-  iam_role_arn    = try(var.iam_role, aws_iam_role.service[0].arn, var.iam_role_arn)
+  create_iam_role   = var.create && var.create_iam_role
+  create_iam_policy = var.create && var.create_iam_policy
+  iam_role_arn      = try(var.iam_role, aws_iam_role.service[0].arn, var.iam_role_arn)
 
   iam_role_name   = try(coalesce(var.iam_role_name, var.name), "")
   iam_policy_name = try(coalesce(var.iam_policy_name, var.name), "")
@@ -615,7 +616,7 @@ data "aws_iam_policy_document" "service" {
 }
 
 resource "aws_iam_policy" "service" {
-  count = local.create_iam_role ? 1 : 0
+  count = local.create_iam_policy ? 1 : 0
 
   name        = var.iam_role_use_name_prefix ? null : local.iam_policy_name
   name_prefix = var.iam_role_use_name_prefix ? "${local.iam_role_name}-" : null
@@ -627,7 +628,7 @@ resource "aws_iam_policy" "service" {
 }
 
 resource "aws_iam_role_policy_attachment" "service" {
-  count = local.create_iam_role ? 1 : 0
+  count = local.create_iam_role && local.create_iam_policy ? 1 : 0
 
   role       = aws_iam_role.service[0].name
   policy_arn = aws_iam_policy.service[0].arn

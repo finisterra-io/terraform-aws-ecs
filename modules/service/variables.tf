@@ -204,6 +204,12 @@ variable "create_iam_role" {
   default     = true
 }
 
+variable "create_iam_policy" {
+  description = "Determines whether the ECS service IAM policy should be created"
+  type        = bool
+  default     = false
+}
+
 variable "iam_role_arn" {
   description = "Existing IAM role ARN"
   type        = string
