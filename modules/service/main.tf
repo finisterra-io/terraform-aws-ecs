@@ -678,7 +678,7 @@ resource "aws_ecs_task_definition" "this" {
     }
   }
 
-  execution_role_arn = try(aws_iam_role.task_exec[0].arn, var.task_exec_iam_role_arn)
+  execution_role_arn = data.aws_iam_role.task_exec.arn
   family             = coalesce(var.family, var.name)
 
   dynamic "inference_accelerator" {
