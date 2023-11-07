@@ -47,17 +47,17 @@ data "aws_lb_listener" "listener_rule" {
 # }
 
 data "aws_iam_role" "service" {
-  count = local.create_iam_role ? 0 : 1
+  count = local.create_iam_role && var.iam_role_name != null ? 0 : 1
   name  = var.iam_role_name
 }
 
 data "aws_iam_role" "tasks" {
-  count = local.create_tasks_iam_role ? 0 : 1
+  count = local.create_tasks_iam_role && var.tasks_iam_role_name != null ? 0 : 1
   name  = var.tasks_iam_role_name
 }
 
 data "aws_iam_role" "task_exec" {
-  count = local.create_task_exec_iam_role ? 0 : 1
+  count = local.create_task_exec_iam_role && var.task_exec_iam_role_name != null ? 0 : 1
   name  = var.task_exec_iam_role_name
 }
 

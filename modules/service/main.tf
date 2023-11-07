@@ -79,7 +79,7 @@ resource "aws_ecs_service" "this" {
   enable_execute_command             = var.enable_execute_command
   force_new_deployment               = local.is_external_deployment ? null : var.force_new_deployment
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
-  iam_role                           = data.aws_iam_role.service[0].arn
+  iam_role                           = try(data.aws_iam_role.service[0].arn, null)
   launch_type                        = local.is_external_deployment || length(var.capacity_provider_strategy) > 0 ? null : var.launch_type
 
   dynamic "load_balancer" {
@@ -678,7 +678,7 @@ resource "aws_ecs_task_definition" "this" {
     }
   }
 
-  execution_role_arn = data.aws_iam_role.task_exec[0].arn
+  execution_role_arn = try(data.aws_iam_role.task_exec[0].arn, null)
   family             = coalesce(var.family, var.name)
 
   dynamic "inference_accelerator" {
@@ -726,7 +726,7 @@ resource "aws_ecs_task_definition" "this" {
   }
 
   skip_destroy  = var.skip_destroy
-  task_role_arn = data.aws_iam_role.tasks[0].arn
+  task_role_arn = try(data.aws_iam_role.tasks[0].arn, null)
 
   dynamic "volume" {
     for_each = var.volume
