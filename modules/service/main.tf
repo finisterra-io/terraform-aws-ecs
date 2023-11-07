@@ -513,7 +513,7 @@ resource "aws_lb_listener_rule" "this" {
 locals {
   create_iam_role   = var.create && var.create_iam_role
   create_iam_policy = var.create && var.create_iam_policy
-  iam_role_arn      = try(var.iam_role, aws_iam_role.service[0].arn, var.iam_role_arn)
+  iam_role_arn      = try(var.iam_role, data.aws_iam_role.service[0].arn, var.iam_role_arn)
 
   iam_role_name   = try(coalesce(var.iam_role_name, var.name), "")
   iam_policy_name = try(coalesce(var.iam_policy_name, var.name), "")
@@ -678,7 +678,7 @@ resource "aws_ecs_task_definition" "this" {
     }
   }
 
-  execution_role_arn = data.aws_iam_role.task_exec.arn
+  execution_role_arn = data.aws_iam_role.task_exec[0].arn
   family             = coalesce(var.family, var.name)
 
   dynamic "inference_accelerator" {
