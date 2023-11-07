@@ -628,10 +628,10 @@ resource "aws_iam_policy" "service" {
 }
 
 resource "aws_iam_role_policy_attachment" "service" {
-  count = local.create_iam_role && local.create_iam_policy ? 1 : 0
+  count = local.create_iam_role ? 1 : 0
 
   role       = aws_iam_role.service[0].name
-  policy_arn = aws_iam_policy.service[0].arn
+  policy_arn = try(aws_iam_policy.service[0].arn, data.aws_iam_policy.service[0].arn)
 }
 
 

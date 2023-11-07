@@ -40,3 +40,8 @@ data "aws_lb_listener" "listener_rule" {
 #   domain   = each.value.domain_name
 #   statuses = ["ISSUED"]
 # }
+
+data "aws_iam_policy" "service" {
+  count = local.create_iam_policy ? 0 : 1
+  name  = local.iam_policy_name
+}
