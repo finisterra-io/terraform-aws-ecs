@@ -79,7 +79,7 @@ resource "aws_ecs_service" "this" {
   enable_execute_command             = var.enable_execute_command
   force_new_deployment               = local.is_external_deployment ? null : var.force_new_deployment
   health_check_grace_period_seconds  = var.health_check_grace_period_seconds
-  iam_role                           = data.aws_iam_role.service.arn
+  iam_role                           = data.aws_iam_role[0].service.arn
   launch_type                        = local.is_external_deployment || length(var.capacity_provider_strategy) > 0 ? null : var.launch_type
 
   dynamic "load_balancer" {
