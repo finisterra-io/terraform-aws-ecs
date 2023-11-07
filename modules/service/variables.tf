@@ -826,7 +826,7 @@ variable "listeners" {
   type = map(object({
     port            = number
     protocol        = string
-    certificate_arn = string
+    certificate_arn = optional(string)
     tags            = map(string)
   }))
   default = {}
