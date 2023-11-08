@@ -54,7 +54,7 @@ resource "aws_ecs_cluster" "this" {
 
         content {
           kms_key_id = try(execute_command_configuration.value.kms_key_id, null)
-          logging    = try(execute_command_configuration.value.logging, "DEFAULT")
+          logging    = try(execute_command_configuration.value.logging, "DEFAULTA")
 
           dynamic "log_configuration" {
             for_each = try([execute_command_configuration.value.log_configuration], [])
