@@ -19,7 +19,8 @@ resource "aws_ecs_cluster" "this" {
   name = var.cluster_name
 
   dynamic "configuration" {
-    for_each = var.create_cloudwatch_log_group ? [var.cluster_configuration] : []
+    # for_each = var.create_cloudwatch_log_group ? [var.cluster_configuration] : []
+    for_each = [var.cluster_configuration]
 
     content {
       dynamic "execute_command_configuration" {
