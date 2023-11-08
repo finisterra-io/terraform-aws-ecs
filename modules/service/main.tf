@@ -277,16 +277,16 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   name = var.name
 
-  # dynamic "network_configuration" {
-  #   # Set by task set if deployment controller is external
-  #   for_each = var.network_configuration
+  dynamic "network_configuration" {
+    # Set by task set if deployment controller is external
+    for_each = var.network_configuration
 
-  #   content {
-  #     assign_public_ip = network_configuration.value.assign_public_ip
-  #     security_groups  = network_configuration.value.security_groups
-  #     subnets          = network_configuration.value.subnets
-  #   }
-  # }
+    content {
+      assign_public_ip = network_configuration.value.assign_public_ip
+      security_groups  = network_configuration.value.security_groups
+      subnets          = network_configuration.value.subnets
+    }
+  }
 
   dynamic "ordered_placement_strategy" {
     for_each = var.ordered_placement_strategy
