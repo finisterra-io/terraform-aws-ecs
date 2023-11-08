@@ -1153,7 +1153,7 @@ resource "aws_ecs_task_set" "this" {
   wait_until_stable         = var.wait_until_stable
   wait_until_stable_timeout = var.wait_until_stable_timeout
 
-  tags = merge(var.tags, var.task_tags)
+  tags = var.task_tags
 
   lifecycle {
     ignore_changes = [
@@ -1235,7 +1235,7 @@ resource "aws_ecs_task_set" "ignore_task_definition" {
   wait_until_stable         = var.wait_until_stable
   wait_until_stable_timeout = var.wait_until_stable_timeout
 
-  tags = merge(var.tags, var.task_tags)
+  tags = var.task_tags
 
   lifecycle {
     ignore_changes = [
@@ -1385,7 +1385,7 @@ resource "aws_security_group" "this" {
   description = var.security_group_description
   vpc_id      = data.aws_vpc.default[0].id
 
-  tags = merge(var.tags, var.security_group_tags)
+  tags = var.security_group_tags
 
   lifecycle {
     create_before_destroy = true
