@@ -866,8 +866,8 @@ variable "network_configuration" {
   description = "Network configuration for the service"
   type = map(object({
     assign_public_ip = bool
-    security_groups  = list(string)
-    subnets          = list(string)
+    security_groups  = list(any)
+    subnets          = list(any)
   }))
   default = {}
 }
