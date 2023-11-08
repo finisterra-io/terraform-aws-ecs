@@ -616,26 +616,27 @@ variable "autoscaling_max_capacity" {
 variable "autoscaling_policies" {
   description = "Map of autoscaling policies to create for the service"
   type        = any
-  default = {
-    cpu = {
-      policy_type = "TargetTrackingScaling"
+  default     = {}
+  # default = {
+  #   cpu = {
+  #     policy_type = "TargetTrackingScaling"
 
-      target_tracking_scaling_policy_configuration = {
-        predefined_metric_specification = {
-          predefined_metric_type = "ECSServiceAverageCPUUtilization"
-        }
-      }
-    }
-    memory = {
-      policy_type = "TargetTrackingScaling"
+  #     target_tracking_scaling_policy_configuration = {
+  #       predefined_metric_specification = {
+  #         predefined_metric_type = "ECSServiceAverageCPUUtilization"
+  #       }
+  #     }
+  #   }
+  #   memory = {
+  #     policy_type = "TargetTrackingScaling"
 
-      target_tracking_scaling_policy_configuration = {
-        predefined_metric_specification = {
-          predefined_metric_type = "ECSServiceAverageMemoryUtilization"
-        }
-      }
-    }
-  }
+  #     target_tracking_scaling_policy_configuration = {
+  #       predefined_metric_specification = {
+  #         predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+  #       }
+  #     }
+  #   }
+  # }
 }
 
 variable "autoscaling_scheduled_actions" {
