@@ -791,7 +791,7 @@ resource "aws_ecs_task_definition" "this" {
     }
   }
 
-  tags = merge(var.tags, var.task_tags)
+  tags = var.task_tags
 
   lifecycle {
     create_before_destroy = true
