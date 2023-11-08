@@ -98,7 +98,7 @@ resource "aws_ecs_service" "this" {
 
   dynamic "network_configuration" {
     # Set by task set if deployment controller is external
-    for_each = var.network_mode == "awsvpc" ? [{ for k, v in local.network_configuration : k => v if !local.is_external_deployment }] : []
+    for_each = var.network_configuration
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
@@ -1090,7 +1090,8 @@ resource "aws_ecs_task_set" "this" {
   task_definition = local.task_definition
 
   dynamic "network_configuration" {
-    for_each = var.network_mode == "awsvpc" ? [local.network_configuration] : []
+    # Set by task set if deployment controller is external
+    for_each = var.network_configuration
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
@@ -1171,7 +1172,8 @@ resource "aws_ecs_task_set" "ignore_task_definition" {
   task_definition = local.task_definition
 
   dynamic "network_configuration" {
-    for_each = var.network_mode == "awsvpc" ? [local.network_configuration] : []
+    # Set by task set if deployment controller is external
+    for_each = var.network_configuration
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
