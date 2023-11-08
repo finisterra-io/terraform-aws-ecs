@@ -462,9 +462,13 @@ resource "aws_lb_listener_rule" "this" {
     for_each = length(each.value.conditions) > 0 ? [each.value.conditions] : []
 
     content {
+
       # Host Header condition
-      host_header {
-        values = try(each.value.conditions[0].host_header[0].values, [])
+      dynamic "host_header" {
+        for_each = try(condition.value.host_header, [])
+        content {
+          values = host_header.value.values
+        }
       }
 
       # HTTP Request Method condition
