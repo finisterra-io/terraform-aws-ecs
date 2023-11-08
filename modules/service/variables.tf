@@ -855,3 +855,15 @@ variable "tasks_iam_role_inline_policies" {
   description = "IAM policy document (same as policy_documents but in JSON format)"
   default     = []
 }
+
+variable "autoscaling_tags" {
+  description = "A map of additional tags to add to the autoscaling group created"
+  type        = map(string)
+  default     = {}
+}
+
+variable "network_configuration" {
+  description = "Network configuration for the service"
+  type        = map(any)
+  default     = {}
+}

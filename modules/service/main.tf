@@ -279,7 +279,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "network_configuration" {
     # Set by task set if deployment controller is external
-    for_each = var.network_mode == "awsvpc" ? [{ for k, v in local.network_configuration : k => v if !local.is_external_deployment }] : []
+    for_each = var.network_configuration
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
@@ -1259,6 +1259,7 @@ resource "aws_appautoscaling_target" "this" {
   resource_id        = "service/${local.cluster_name}/${try(aws_ecs_service.this[0].name, aws_ecs_service.ignore_task_definition[0].name)}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags               = var.autoscaling_tags
 }
 
 resource "aws_appautoscaling_policy" "this" {
