@@ -393,10 +393,11 @@ resource "aws_ecs_service" "ignore_task_definition" {
 resource "aws_lb_target_group" "this" {
   count = var.create_target_group ? 1 : 0
 
-  name     = var.target_group_name
-  port     = var.target_group_port
-  protocol = var.target_group_protocol
-  vpc_id   = data.aws_vpc.default[0].id
+  name        = var.target_group_name
+  port        = var.target_group_port
+  protocol    = var.target_group_protocol
+  vpc_id      = data.aws_vpc.default[0].id
+  target_type = var.target_type
 
 
   dynamic "health_check" {
