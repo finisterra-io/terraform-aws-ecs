@@ -279,7 +279,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "network_configuration" {
     # Set by task set if deployment controller is external
-    for_each = [var.network_configuration]
+    for_each = var.network_configuration
 
     content {
       assign_public_ip = network_configuration.value.assign_public_ip
