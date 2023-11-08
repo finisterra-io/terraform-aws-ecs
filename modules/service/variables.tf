@@ -864,11 +864,7 @@ variable "autoscaling_tags" {
 
 variable "network_configuration" {
   description = "Network configuration for the service"
-  type = map(object({
-    assign_public_ip = bool
-    security_groups  = list(any)
-    subnets          = list(any)
-  }))
-  default = {}
+  type        = map(string)
+  default     = {}
 }
 
