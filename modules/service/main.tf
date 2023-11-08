@@ -1271,7 +1271,7 @@ resource "aws_appautoscaling_policy" "this" {
   service_namespace  = aws_appautoscaling_target.this[0].service_namespace
 
   dynamic "step_scaling_policy_configuration" {
-    for_each = try([each.value.step_scaling_policy_configuration], [])
+    for_each = try(each.value.step_scaling_policy_configuration, [])
 
     content {
       adjustment_type          = try(step_scaling_policy_configuration.value.adjustment_type, null)
