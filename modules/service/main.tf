@@ -298,7 +298,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   }
 
   dynamic "placement_constraints" {
-    for_each = len(var.placement_constraints) > 0 ? [var.placement_constraints] : []
+    for_each = length(var.placement_constraints) > 0 ? [var.placement_constraints] : []
 
     content {
       expression = try(placement_constraints.value.expression, null)
