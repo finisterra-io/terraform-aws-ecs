@@ -289,7 +289,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   }
 
   dynamic "ordered_placement_strategy" {
-    for_each = var.ordered_placement_strategy
+    for_each = length(var.ordered_placement_strategy) > 0 ? [var.ordered_placement_strategy] : []
 
     content {
       field = try(ordered_placement_strategy.value.field, null)
