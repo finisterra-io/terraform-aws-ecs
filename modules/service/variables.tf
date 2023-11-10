@@ -355,7 +355,7 @@ variable "memory" {
 variable "network_mode" {
   description = "Docker networking mode to use for the containers in the task. Valid values are `none`, `bridge`, `awsvpc`, and `host`"
   type        = string
-  default     = "awsvpc"
+  default     = null
 }
 
 variable "pid_mode" {
