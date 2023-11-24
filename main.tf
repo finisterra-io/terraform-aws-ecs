@@ -156,8 +156,8 @@ module "service" {
 
   # Autoscaling
   enable_autoscaling       = try(each.value.enable_autoscaling, true)
-  autoscaling_min_capacity = try(each.value.autoscaling_min_capacity, 1)
-  autoscaling_max_capacity = try(each.value.autoscaling_max_capacity, 10)
+  autoscaling_min_capacity = try(each.value.autoscaling_min_capacity, null)
+  autoscaling_max_capacity = try(each.value.autoscaling_max_capacity, null)
   autoscaling_policies = try(each.value.autoscaling_policies, {
     cpu = {
       policy_type = "TargetTrackingScaling"

@@ -598,19 +598,19 @@ variable "wait_until_stable_timeout" {
 variable "enable_autoscaling" {
   description = "Determines whether to enable autoscaling for the service"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "autoscaling_min_capacity" {
   description = "Minimum number of tasks to run in your service"
   type        = number
-  default     = 1
+  default     = null
 }
 
 variable "autoscaling_max_capacity" {
   description = "Maximum number of tasks to run in your service"
   type        = number
-  default     = 10
+  default     = null
 }
 
 variable "autoscaling_policies" {
