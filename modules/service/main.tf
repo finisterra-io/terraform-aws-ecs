@@ -225,7 +225,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "capacity_provider_strategy" {
     # Set by task set if deployment controller is external
-    for_each = !local.is_external_deployment ? var.capacity_provider_strategy : {}
+    for_each = !local.is_external_deployment ? var.capacity_provider_strategy : []
 
     content {
       base              = try(capacity_provider_strategy.value.base, null)
