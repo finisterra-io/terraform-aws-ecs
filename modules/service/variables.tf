@@ -17,7 +17,7 @@ variable "tags" {
 variable "ignore_task_definition_changes" {
   description = "Whether changes to service `task_definition` changes should be ignored"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "alarms" {
