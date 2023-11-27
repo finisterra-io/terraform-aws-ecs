@@ -214,7 +214,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   count = var.create && var.ignore_task_definition_changes ? 1 : 0
 
   dynamic "alarms" {
-    for_each = length(var.alarms) > 0 ? [var.alarms] : []
+    for_each = var.alarms
 
     content {
       alarm_names = alarms.value.alarm_names
@@ -225,7 +225,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "capacity_provider_strategy" {
     # Set by task set if deployment controller is external
-    for_each = { for k, v in var.capacity_provider_strategy : k => v if !local.is_external_deployment }
+    for_each = !local.is_external_deployment ? var.capacity_provider_strategy : {}
 
     content {
       base              = try(capacity_provider_strategy.value.base, null)
@@ -237,7 +237,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   cluster = var.cluster_arn
 
   dynamic "deployment_circuit_breaker" {
-    for_each = length(var.deployment_circuit_breaker) > 0 ? [var.deployment_circuit_breaker] : []
+    for_each = var.deployment_circuit_breaker
 
     content {
       enable   = deployment_circuit_breaker.value.enable
@@ -246,7 +246,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   }
 
   dynamic "deployment_controller" {
-    for_each = length(var.deployment_controller) > 0 ? [var.deployment_controller] : []
+    for_each = var.deployment_controller
 
     content {
       type = try(deployment_controller.value.type, null)
@@ -265,7 +265,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "load_balancer" {
     # Set by task set if deployment controller is external
-    for_each = { for k, v in var.load_balancer : k => v if !local.is_external_deployment }
+    for_each = !local.is_external_deployment ? var.load_balancer : []
 
     content {
       container_name   = load_balancer.value.container_name
@@ -289,7 +289,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   }
 
   dynamic "ordered_placement_strategy" {
-    for_each = length(var.ordered_placement_strategy) > 0 ? [var.ordered_placement_strategy] : []
+    for_each = var.ordered_placement_strategy
 
     content {
       field = try(ordered_placement_strategy.value.field, null)
@@ -298,7 +298,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   }
 
   dynamic "placement_constraints" {
-    for_each = length(var.placement_constraints) > 0 ? [var.placement_constraints] : []
+    for_each = var.placement_constraints
 
     content {
       expression = try(placement_constraints.value.expression, null)
@@ -311,7 +311,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
   scheduling_strategy = local.is_fargate ? "REPLICA" : var.scheduling_strategy
 
   dynamic "service_connect_configuration" {
-    for_each = length(var.service_connect_configuration) > 0 ? [var.service_connect_configuration] : []
+    for_each = var.service_connect_configuration
 
     content {
       enabled = try(service_connect_configuration.value.enabled, true)

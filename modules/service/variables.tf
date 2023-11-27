@@ -23,13 +23,13 @@ variable "ignore_task_definition_changes" {
 variable "alarms" {
   description = "Information about the CloudWatch alarms"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "capacity_provider_strategy" {
   description = "Capacity provider strategies to use for the service. Can be one or more"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "cluster_arn" {
@@ -41,13 +41,13 @@ variable "cluster_arn" {
 variable "deployment_circuit_breaker" {
   description = "Configuration block for deployment circuit breaker"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "deployment_controller" {
   description = "Configuration block for deployment controller configuration"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "deployment_maximum_percent" {
@@ -101,7 +101,7 @@ variable "launch_type" {
 variable "load_balancer" {
   description = "Configuration block for load balancers"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "name" {
@@ -137,13 +137,13 @@ variable "subnet_names" {
 variable "ordered_placement_strategy" {
   description = "Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "placement_constraints" {
   description = "Configuration block for rules that are taken into consideration during task placement (up to max of 10). This is set at the service, see `task_definition_placement_constraints` for setting at the task definition"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "platform_version" {
@@ -167,7 +167,7 @@ variable "scheduling_strategy" {
 variable "service_connect_configuration" {
   description = "The ECS Service Connect configuration for this service to discover and connect to services, and be discovered by, and connected from, other services within a namespace"
   type        = any
-  default     = {}
+  default     = []
 }
 
 variable "service_registries" {
