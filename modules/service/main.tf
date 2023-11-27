@@ -265,7 +265,7 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
   dynamic "load_balancer" {
     # Set by task set if deployment controller is external
-    for_each = !local.is_external_deployment ? var.load_balancer : []
+    for_each = { for k, v in var.load_balancer : k => v if !local.is_external_deployment }
 
     content {
       container_name   = load_balancer.value.container_name
