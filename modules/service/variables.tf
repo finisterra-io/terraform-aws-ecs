@@ -880,3 +880,15 @@ variable "deregistration_delay" {
   type        = number
   default     = null
 }
+
+variable "create_cloudwatch_log_group" {
+  description = "Determines whether to create a CloudWatch log group"
+  type        = bool
+  default     = false
+}
+
+variable "cloudwatch_log_group_tags" {
+  description = "A map of additional tags to add to the CloudWatch log group created"
+  type        = map(string)
+  default     = {}
+}

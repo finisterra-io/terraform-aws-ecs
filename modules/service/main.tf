@@ -1414,3 +1414,16 @@ resource "aws_security_group_rule" "this" {
 }
 
 
+################################################################################
+# CloudWatch Log Group
+################################################################################
+
+resource "aws_cloudwatch_log_group" "this" {
+  count = var.create && var.create_cloudwatch_log_group ? 1 : 0
+
+  name              = var.name
+  retention_in_days = 90
+  # kms_key_id        = var.cloudwatch_log_group_kms_key_id
+
+  tags = var.cloudwatch_log_group_tags
+}
