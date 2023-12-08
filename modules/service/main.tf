@@ -461,7 +461,7 @@ resource "aws_lb_listener_rule" "this" {
 
 
   dynamic "condition" {
-    for_each = length(each.value.conditions) > 0 ? [each.value.conditions] : []
+    for_each = length(each.value.conditions) > 0 ? each.value.conditions : []
 
     content {
 
