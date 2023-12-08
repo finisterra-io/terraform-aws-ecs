@@ -892,3 +892,9 @@ variable "cloudwatch_log_group_tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "cloudwatch_log_group_name" {
+  description = "Name to use on CloudWatch log group created"
+  type        = string
+  default     = null
+}
