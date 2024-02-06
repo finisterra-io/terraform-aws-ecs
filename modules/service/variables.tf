@@ -168,18 +168,6 @@ variable "wait_for_steady_state" {
 # Service - IAM Role
 ################################################################################
 
-variable "create_iam_role" {
-  description = "Determines whether the ECS service IAM role should be created"
-  type        = bool
-  default     = true
-}
-
-variable "create_iam_policy" {
-  description = "Determines whether the ECS service IAM policy should be created"
-  type        = bool
-  default     = false
-}
-
 variable "iam_role_arn" {
   description = "Existing IAM role ARN"
   type        = string
@@ -206,12 +194,6 @@ variable "task_role_arn" {
 
 variable "execution_role_arn" {
   description = "Existing IAM role ARN"
-  type        = string
-  default     = null
-}
-
-variable "iam_policy_name" {
-  description = "Name to use on IAM policy created"
   type        = string
   default     = null
 }
@@ -336,12 +318,6 @@ variable "task_tags" {
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
 ################################################################################
 
-variable "create_task_exec_iam_role" {
-  description = "Determines whether the ECS task definition IAM role should be created"
-  type        = bool
-  default     = true
-}
-
 variable "task_exec_iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
@@ -363,12 +339,6 @@ variable "create_tasks_iam_role" {
   description = "Determines whether the ECS tasks IAM role should be created"
   type        = bool
   default     = true
-}
-
-variable "tasks_iam_role_name" {
-  description = "Name to use on IAM role created"
-  type        = string
-  default     = null
 }
 
 
@@ -443,18 +413,6 @@ variable "autoscaling_scheduled_actions" {
 ################################################################################
 # Security Group
 ################################################################################
-
-variable "create_security_group" {
-  description = "Determines if a security group is created"
-  type        = bool
-  default     = true
-}
-
-variable "security_group_name" {
-  description = "Name to use on security group created"
-  type        = string
-  default     = null
-}
 
 variable "vpc_name" {
   description = "Name of the VPC"
