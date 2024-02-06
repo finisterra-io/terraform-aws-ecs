@@ -4,15 +4,6 @@ data "aws_partition" "current" {}
 # Cluster
 ################################################################################
 
-locals {
-  execute_command_configuration = {
-    logging = "OVERRIDE"
-    log_configuration = {
-      cloud_watch_log_group_name = try(aws_cloudwatch_log_group.this[0].name, null)
-    }
-  }
-}
-
 resource "aws_ecs_cluster" "this" {
   count = var.create ? 1 : 0
 

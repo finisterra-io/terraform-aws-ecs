@@ -2,12 +2,6 @@ data "aws_region" "current" {}
 data "aws_partition" "current" {}
 data "aws_caller_identity" "current" {}
 
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-  dns_suffix = data.aws_partition.current.dns_suffix
-  partition  = data.aws_partition.current.partition
-  region     = data.aws_region.current.name
-}
 
 ################################################################################
 # Service
@@ -386,18 +380,6 @@ resource "aws_ecs_service" "ignore_task_definition" {
 
 
 ################################################################################
-# Service - IAM Role
-################################################################################
-
-locals {
-  create_iam_role   = var.create && var.create_iam_role
-  create_iam_policy = var.create && var.create_iam_policy
-
-  iam_role_name   = try(coalesce(var.iam_role_name, var.name), "")
-  iam_policy_name = try(coalesce(var.iam_policy_name, var.name), "")
-}
-
-################################################################################
 # Task Definition
 ################################################################################
 
@@ -554,28 +536,6 @@ resource "aws_ecs_task_definition" "this" {
   lifecycle {
     create_before_destroy = true
   }
-}
-
-################################################################################
-# Task Execution - IAM Role
-# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_execution_IAM_role.html
-################################################################################
-
-locals {
-  task_exec_iam_role_name = try(coalesce(var.task_exec_iam_role_name, var.name), "")
-
-  create_task_exec_iam_role = local.create_task_definition && var.create_task_exec_iam_role
-  create_task_exec_policy   = local.create_task_exec_iam_role && var.create_task_exec_policy
-}
-
-################################################################################
-# Tasks - IAM role
-# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
-################################################################################
-
-locals {
-  tasks_iam_role_name   = try(coalesce(var.tasks_iam_role_name, var.name), "")
-  create_tasks_iam_role = local.create_task_definition && var.create_tasks_iam_role
 }
 
 ################################################################################
@@ -857,14 +817,6 @@ resource "aws_appautoscaling_scheduled_action" "this" {
   timezone   = try(each.value.timezone, null)
 }
 
-################################################################################
-# Security Group
-################################################################################
-
-locals {
-  create_security_group = var.create && var.create_security_group && var.network_mode == "awsvpc"
-  security_group_name   = try(coalesce(var.security_group_name, var.name), "")
-}
 
 ################################################################################
 # CloudWatch Log Group

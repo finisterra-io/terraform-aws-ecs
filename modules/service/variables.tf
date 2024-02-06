@@ -110,30 +110,6 @@ variable "name" {
   default     = null
 }
 
-variable "assign_public_ip" {
-  description = "Assign a public IP address to the ENI (Fargate launch type only)"
-  type        = bool
-  default     = false
-}
-
-variable "security_group_ids" {
-  description = "List of security groups to associate with the task or service"
-  type        = list(string)
-  default     = []
-}
-
-variable "subnet_ids" {
-  description = "List of subnets to associate with the task or service"
-  type        = list(string)
-  default     = []
-}
-
-variable "subnet_names" {
-  type        = list(string)
-  description = "The names for the default subnets, uses a module label name if left empty"
-  default     = null
-}
-
 variable "ordered_placement_strategy" {
   description = "Service level strategy rules that are taken into consideration during task placement. List from top to bottom in order of precedence"
   type        = any
@@ -174,12 +150,6 @@ variable "service_registries" {
   description = "Service discovery registries for the service"
   type        = any
   default     = {}
-}
-
-variable "timeouts" {
-  description = "Create, update, and delete timeout configurations for the service"
-  type        = map(string)
-  default     = null
 }
 
 variable "triggers" {
@@ -246,60 +216,6 @@ variable "iam_policy_name" {
   default     = null
 }
 
-variable "iam_role_use_name_prefix" {
-  description = "Determines whether the IAM role name (`iam_role_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "iam_role_path" {
-  description = "IAM role path"
-  type        = string
-  default     = null
-}
-
-variable "iam_policy_path" {
-  description = "IAM policy path"
-  type        = string
-  default     = null
-}
-
-variable "iam_policy_document" {
-  description = "IAM policy document"
-  type        = string
-  default     = null
-}
-
-variable "iam_role_description" {
-  description = "Description of the role"
-  type        = string
-  default     = null
-}
-
-variable "iam_policy_description" {
-  description = "Description of the policy"
-  type        = string
-  default     = null
-}
-
-variable "iam_role_permissions_boundary" {
-  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
-  type        = string
-  default     = null
-}
-
-variable "iam_role_tags" {
-  description = "A map of additional tags to add to the IAM role created"
-  type        = map(string)
-  default     = {}
-}
-
-variable "iam_role_statements" {
-  description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
-  type        = any
-  default     = {}
-}
-
 ################################################################################
 # Task Definition
 ################################################################################
@@ -318,12 +234,6 @@ variable "task_definition_arn" {
 
 variable "container_definitions" {
   description = "A map of valid [container definitions](http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html). Please note that you should only provide values that are part of the container definition document"
-  type        = any
-  default     = {}
-}
-
-variable "container_definition_defaults" {
-  description = "A map of default values for [container definitions](http://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_ContainerDefinition.html) created by `container_definitions`"
   type        = any
   default     = {}
 }
@@ -432,76 +342,16 @@ variable "create_task_exec_iam_role" {
   default     = true
 }
 
-variable "task_exec_iam_role_arn" {
-  description = "Existing IAM role ARN"
-  type        = string
-  default     = null
-}
-
 variable "task_exec_iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
   default     = null
 }
 
-variable "task_exec_iam_role_use_name_prefix" {
-  description = "Determines whether the IAM role name (`task_exec_iam_role_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "task_exec_iam_role_path" {
-  description = "IAM role path"
-  type        = string
-  default     = null
-}
-
-variable "task_exec_iam_role_description" {
-  description = "Description of the role"
-  type        = string
-  default     = null
-}
-
-variable "task_exec_iam_role_permissions_boundary" {
-  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
-  type        = string
-  default     = null
-}
-
-variable "task_exec_iam_role_tags" {
-  description = "A map of additional tags to add to the IAM role created"
-  type        = map(string)
-  default     = {}
-}
-
-variable "task_exec_iam_role_policies" {
-  description = "Map of IAM role policy ARNs to attach to the IAM role"
-  type        = map(string)
-  default     = {}
-}
-
 variable "create_task_exec_policy" {
   description = "Determines whether the ECS task definition IAM policy should be created. This includes permissions included in AmazonECSTaskExecutionRolePolicy as well as access to secrets and SSM parameters"
   type        = bool
   default     = true
-}
-
-variable "task_exec_ssm_param_arns" {
-  description = "List of SSM parameter ARNs the task execution role will be permitted to get/read"
-  type        = list(string)
-  default     = ["arn:aws:ssm:*:*:parameter/*"]
-}
-
-variable "task_exec_secret_arns" {
-  description = "List of SecretsManager secret ARNs the task execution role will be permitted to get/read"
-  type        = list(string)
-  default     = ["arn:aws:secretsmanager:*:*:secret:*"]
-}
-
-variable "task_exec_iam_statements" {
-  description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
-  type        = any
-  default     = {}
 }
 
 ################################################################################
@@ -515,59 +365,12 @@ variable "create_tasks_iam_role" {
   default     = true
 }
 
-variable "tasks_iam_role_arn" {
-  description = "Existing IAM role ARN"
-  type        = string
-  default     = null
-}
-
 variable "tasks_iam_role_name" {
   description = "Name to use on IAM role created"
   type        = string
   default     = null
 }
 
-variable "tasks_iam_role_use_name_prefix" {
-  description = "Determines whether the IAM role name (`tasks_iam_role_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "tasks_iam_role_path" {
-  description = "IAM role path"
-  type        = string
-  default     = null
-}
-
-variable "tasks_iam_role_description" {
-  description = "Description of the role"
-  type        = string
-  default     = null
-}
-
-variable "tasks_iam_role_permissions_boundary" {
-  description = "ARN of the policy that is used to set the permissions boundary for the IAM role"
-  type        = string
-  default     = null
-}
-
-variable "tasks_iam_role_tags" {
-  description = "A map of additional tags to add to the IAM role created"
-  type        = map(string)
-  default     = {}
-}
-
-variable "tasks_iam_role_policies" {
-  description = "Map of IAM role policy ARNs to attach to the IAM role"
-  type        = map(string)
-  default     = {}
-}
-
-variable "tasks_iam_role_statements" {
-  description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
-  type        = any
-  default     = {}
-}
 
 ################################################################################
 # Task Set
@@ -653,104 +456,10 @@ variable "security_group_name" {
   default     = null
 }
 
-variable "security_group_use_name_prefix" {
-  description = "Determines whether the security group name (`security_group_name`) is used as a prefix"
-  type        = bool
-  default     = true
-}
-
-variable "security_group_description" {
-  description = "Description of the security group created"
-  type        = string
-  default     = null
-}
-
-variable "security_group_rules" {
-  description = "Security group rules to add to the security group created"
-  type        = any
-  default     = {}
-}
-
-variable "security_group_tags" {
-  description = "A map of additional tags to add to the security group created"
-  type        = map(string)
-  default     = {}
-}
-
-
-variable "task_exec_assume_role_policy" {
-  description = "IAM policy document defining the trust relationship for the task execution role"
-  type        = string
-  default     = null
-}
-
-variable "tasks_assume_role_policy" {
-  description = "IAM policy document defining the trust relationship for the tasks role"
-  type        = string
-  default     = null
-}
-
-
-
 variable "vpc_name" {
   description = "Name of the VPC"
   type        = string
   default     = null
-}
-
-variable "lb_listener_port" {
-  description = "Port to use on load balancer listener created"
-  type        = number
-  default     = 80
-}
-
-variable "lb_listener_protocol" {
-  description = "Protocol to use on load balancer listener created"
-  type        = string
-  default     = "HTTP"
-}
-
-variable "lb_listener_tags" {
-  description = "A map of additional tags to add to the load balancer listener created"
-  type        = map(string)
-  default     = {}
-}
-
-variable "listener_rule_priority" {
-  description = "Priority for the listener rule"
-  type        = number
-  default     = 1
-}
-
-variable "listener_rule_conditions" {
-  description = "List of conditions for the listener rule"
-  type        = map(any)
-  default     = {}
-}
-
-variable "listener_rule_tags" {
-  description = "A map of additional tags to add to the listener rule created"
-  type        = map(string)
-  default     = {}
-}
-
-
-variable "iam_role_inline_policies" {
-  type        = list(any)
-  description = "IAM policy document (same as policy_documents but in JSON format)"
-  default     = []
-}
-
-variable "task_exec_iam_role_inline_policies" {
-  type        = list(any)
-  description = "IAM policy document (same as policy_documents but in JSON format)"
-  default     = []
-}
-
-variable "tasks_iam_role_inline_policies" {
-  type        = list(any)
-  description = "IAM policy document (same as policy_documents but in JSON format)"
-  default     = []
 }
 
 variable "autoscaling_tags" {
