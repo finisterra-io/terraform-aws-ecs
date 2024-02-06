@@ -71,9 +71,6 @@ module "service" {
   launch_type                        = try(each.value.launch_type, "FARGATE")
   load_balancer                      = lookup(each.value, "load_balancer", {})
   name                               = try(each.value.name, each.key)
-  assign_public_ip                   = try(each.value.assign_public_ip, false)
-  security_group_ids                 = lookup(each.value, "security_group_ids", [])
-  subnet_ids                         = lookup(each.value, "subnet_ids", [])
   ordered_placement_strategy         = try(each.value.ordered_placement_strategy, {})
   placement_constraints              = try(each.value.placement_constraints, {})
   platform_version                   = try(each.value.platform_version, null)
@@ -81,35 +78,26 @@ module "service" {
   scheduling_strategy                = try(each.value.scheduling_strategy, null)
   service_connect_configuration      = lookup(each.value, "service_connect_configuration", {})
   service_registries                 = lookup(each.value, "service_registries", {})
-  timeouts                           = try(each.value.timeouts, {})
   triggers                           = try(each.value.triggers, {})
   wait_for_steady_state              = try(each.value.wait_for_steady_state, null)
 
   # Service IAM role
-  create_iam_role               = try(each.value.create_iam_role, true)
-  iam_role_arn                  = lookup(each.value, "iam_role_arn", null)
-  iam_role_name                 = try(each.value.iam_role_name, null)
-  iam_role_use_name_prefix      = try(each.value.iam_role_use_name_prefix, true)
-  iam_role_path                 = try(each.value.iam_role_path, null)
-  iam_role_description          = try(each.value.iam_role_description, null)
-  iam_role_permissions_boundary = try(each.value.iam_role_permissions_boundary, null)
-  iam_role_tags                 = try(each.value.iam_role_tags, {})
-  iam_role_statements           = lookup(each.value, "iam_role_statements", {})
+  iam_role_arn  = lookup(each.value, "iam_role_arn", null)
+  iam_role_name = try(each.value.iam_role_name, null)
 
   # Task definition
-  create_task_definition        = try(each.value.create_task_definition, true)
-  task_definition_arn           = lookup(each.value, "task_definition_arn", null)
-  container_definitions         = try(each.value.container_definitions, {})
-  container_definition_defaults = try(each.value.container_definition_defaults, {})
-  cpu                           = try(each.value.cpu, 1024)
-  ephemeral_storage             = try(each.value.ephemeral_storage, {})
-  family                        = try(each.value.family, null)
-  inference_accelerator         = try(each.value.inference_accelerator, {})
-  ipc_mode                      = try(each.value.ipc_mode, null)
-  memory                        = try(each.value.memory, 2048)
-  network_mode                  = try(each.value.network_mode, "awsvpc")
-  proxy_configuration           = try(each.value.proxy_configuration, {})
-  requires_compatibilities      = try(each.value.requires_compatibilities, ["FARGATE"])
+  create_task_definition   = try(each.value.create_task_definition, true)
+  task_definition_arn      = lookup(each.value, "task_definition_arn", null)
+  container_definitions    = try(each.value.container_definitions, {})
+  cpu                      = try(each.value.cpu, 1024)
+  ephemeral_storage        = try(each.value.ephemeral_storage, {})
+  family                   = try(each.value.family, null)
+  inference_accelerator    = try(each.value.inference_accelerator, {})
+  ipc_mode                 = try(each.value.ipc_mode, null)
+  memory                   = try(each.value.memory, 2048)
+  network_mode             = try(each.value.network_mode, "awsvpc")
+  proxy_configuration      = try(each.value.proxy_configuration, {})
+  requires_compatibilities = try(each.value.requires_compatibilities, ["FARGATE"])
   runtime_platform = try(each.value.runtime_platform, {
     operating_system_family = "LINUX"
     cpu_architecture        = "X86_64"
@@ -119,33 +107,13 @@ module "service" {
   task_tags    = try(each.value.task_tags, {})
 
   # Task execution IAM role
-  create_task_exec_iam_role               = try(each.value.create_task_exec_iam_role, true)
-  task_exec_iam_role_arn                  = lookup(each.value, "task_exec_iam_role_arn", null)
-  task_exec_iam_role_name                 = try(each.value.task_exec_iam_role_name, null)
-  task_exec_iam_role_use_name_prefix      = try(each.value.task_exec_iam_role_use_name_prefix, true)
-  task_exec_iam_role_path                 = try(each.value.task_exec_iam_role_path, null)
-  task_exec_iam_role_description          = try(each.value.task_exec_iam_role_description, null)
-  task_exec_iam_role_permissions_boundary = try(each.value.task_exec_iam_role_permissions_boundary, null)
-  task_exec_iam_role_tags                 = try(each.value.task_exec_iam_role_tags, {})
-  task_exec_iam_role_policies             = try(each.value.task_exec_iam_role_policies, {})
+  task_exec_iam_role_name = try(each.value.task_exec_iam_role_name, null)
 
   # Task execution IAM role policy
-  create_task_exec_policy  = try(each.value.create_task_exec_policy, true)
-  task_exec_ssm_param_arns = lookup(each.value, "task_exec_ssm_param_arns", ["arn:aws:ssm:*:*:parameter/*"])
-  task_exec_secret_arns    = lookup(each.value, "task_exec_secret_arns", ["arn:aws:secretsmanager:*:*:secret:*"])
-  task_exec_iam_statements = lookup(each.value, "task_exec_iam_statements", {})
+  create_task_exec_policy = try(each.value.create_task_exec_policy, true)
 
   # Tasks - IAM role
-  create_tasks_iam_role               = try(each.value.create_tasks_iam_role, true)
-  tasks_iam_role_arn                  = lookup(each.value, "tasks_iam_role_arn", null)
-  tasks_iam_role_name                 = try(each.value.tasks_iam_role_name, null)
-  tasks_iam_role_use_name_prefix      = try(each.value.tasks_iam_role_use_name_prefix, true)
-  tasks_iam_role_path                 = try(each.value.tasks_iam_role_path, null)
-  tasks_iam_role_description          = try(each.value.tasks_iam_role_description, null)
-  tasks_iam_role_permissions_boundary = try(each.value.tasks_iam_role_permissions_boundary, null)
-  tasks_iam_role_tags                 = try(each.value.tasks_iam_role_tags, {})
-  tasks_iam_role_policies             = lookup(each.value, "tasks_iam_role_policies", {})
-  tasks_iam_role_statements           = lookup(each.value, "tasks_iam_role_statements", {})
+  create_tasks_iam_role = try(each.value.create_tasks_iam_role, true)
 
   # Task set
   external_id               = try(each.value.external_id, null)
@@ -179,14 +147,6 @@ module "service" {
     }
   })
   autoscaling_scheduled_actions = try(each.value.autoscaling_scheduled_actions, {})
-
-  # Security Group
-  create_security_group          = try(each.value.create_security_group, true)
-  security_group_name            = try(each.value.security_group_name, null)
-  security_group_use_name_prefix = try(each.value.security_group_use_name_prefix, true)
-  security_group_description     = try(each.value.security_group_description, null)
-  security_group_rules           = lookup(each.value, "security_group_rules", {})
-  security_group_tags            = try(each.value.security_group_tags, {})
 
   tags = merge(var.tags, try(each.value.tags, {}))
 }
