@@ -87,4 +87,3 @@ output "autoscaling_scheduled_actions" {
   description = "Map of autoscaling scheduled actions and their attributes"
   value       = aws_appautoscaling_scheduled_action.this
 }
-
