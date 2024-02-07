@@ -109,12 +109,6 @@ module "service" {
   # Task execution IAM role
   task_exec_iam_role_name = try(each.value.task_exec_iam_role_name, null)
 
-  # Task execution IAM role policy
-  create_task_exec_policy = try(each.value.create_task_exec_policy, true)
-
-  # Tasks - IAM role
-  create_tasks_iam_role = try(each.value.create_tasks_iam_role, true)
-
   # Task set
   external_id               = try(each.value.external_id, null)
   scale                     = try(each.value.scale, {})
