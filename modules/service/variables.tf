@@ -324,23 +324,6 @@ variable "task_exec_iam_role_name" {
   default     = null
 }
 
-variable "create_task_exec_policy" {
-  description = "Determines whether the ECS task definition IAM policy should be created. This includes permissions included in AmazonECSTaskExecutionRolePolicy as well as access to secrets and SSM parameters"
-  type        = bool
-  default     = true
-}
-
-################################################################################
-# Tasks - IAM role
-# https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html
-################################################################################
-
-variable "create_tasks_iam_role" {
-  description = "Determines whether the ECS tasks IAM role should be created"
-  type        = bool
-  default     = true
-}
-
 
 ################################################################################
 # Task Set
