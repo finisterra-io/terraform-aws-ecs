@@ -66,7 +66,7 @@ module "service" {
   desired_count                      = try(each.value.desired_count, 1)
   enable_ecs_managed_tags            = try(each.value.enable_ecs_managed_tags, true)
   enable_execute_command             = try(each.value.enable_execute_command, false)
-  force_new_deployment               = try(each.value.force_new_deployment, true)
+  force_new_deployment               = try(each.value.force_new_deployment, false)
   health_check_grace_period_seconds  = try(each.value.health_check_grace_period_seconds, null)
   launch_type                        = try(each.value.launch_type, "FARGATE")
   load_balancer                      = lookup(each.value, "load_balancer", {})
