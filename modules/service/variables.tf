@@ -83,7 +83,7 @@ variable "enable_execute_command" {
 variable "force_new_deployment" {
   description = "Enable to force a new task deployment of the service. This can be used to update tasks to use a newer Docker image with same image/tag combination, roll Fargate tasks onto a newer platform version, or immediately deploy `ordered_placement_strategy` and `placement_constraints` updates"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "health_check_grace_period_seconds" {
