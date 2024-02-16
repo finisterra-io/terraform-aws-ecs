@@ -183,7 +183,9 @@ resource "aws_ecs_service" "this" {
 
   lifecycle {
     ignore_changes = [
-      desired_count, # Always ignored
+      desired_count,
+      force_new_deployment,
+      wait_for_steady_state
     ]
   }
 }
@@ -368,6 +370,9 @@ resource "aws_ecs_service" "ignore_task_definition" {
       desired_count, # Always ignored
       task_definition,
       load_balancer,
+      force_new_deployment,
+      wait_for_steady_state
+
     ]
   }
 }
