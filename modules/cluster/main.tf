@@ -4,6 +4,8 @@ data "aws_partition" "current" {}
 # Cluster
 ################################################################################
 
+#already dynamic "setting"
+#trivy:ignore:avd-aws-0034
 resource "aws_ecs_cluster" "this" {
   count = var.create ? 1 : 0
 
